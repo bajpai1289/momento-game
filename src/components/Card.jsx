@@ -1,18 +1,20 @@
-import React from 'react'
+const Card = ({ image, selected, onClick }) => {
 
-const Card = ({image, selected , onClick}) => {
+
   return (
-    <div className='card'>
-        <div className={selected ? 'selected': 'unselected'}>
-            <img src={image} alt="" className='card-face' />
-            <img
-                alt=''
-                className='card-back'
-                src={'/public/assets/fireship.png'}
-                />
-        </div>
-    </div>
-  )
-}
+    <div className="card">
+      <div className={selected && 'selected'}>
+        <img alt="" src={image} className="card-face" />
 
-export default Card
+        <img
+          alt=""
+          className="card-back"
+          src={'/assets/fireship.png'}
+          onClick={onClick}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default Card;
