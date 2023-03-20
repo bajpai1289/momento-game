@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import Card from './components/Card';
 import Header from './components/Header';
+import useAppBadge from './hooks/useAppBadge';
 import shuffle from './utilities/shuffle';
 
 function App() {
@@ -10,14 +11,16 @@ function App() {
   const [pickTwo, setpickTwo] = useState(null);//second selection
   const [disabled, setDisabled] = useState(false);  //Delay Handler-make sure user dont click everything and get all hte matches
   const [wins, setWins] = useState(0);
+  const [setBadge, clearBadge] = useAppBadge();
 
   const handleClick=(card)=>{
     if(!disabled){
       pickOne?setpickTwo(card):setPickOne(card);
     }
   };
-  const handleNewGame = () =>{
-     setWins(0);
+  const handleNewGame = () => {
+    clearBadge()
+     setWins(0); 
      handleTurn();
      setCards(shuffle)
   }
@@ -71,10 +74,10 @@ function App() {
     if(cards.length && checkWin.length<1){
       setWins(wins+1);
       handleTurn();
-      setCards(shuffle)
-
+      setCards(shuffle);
+      setBadge();
     }
-  }, [cards, wins])
+  }, [cards, wins, setBadge])
   return (
     <>
     <Header handleNewGame={handleNewGame} wins = {wins} />
