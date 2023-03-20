@@ -27,38 +27,39 @@ function App() {
     setDisabled(false);
   };
   // used for selection and match handling 
-  useEffect(()=>{
+  useEffect(() => {
     let pickTimer;
 
-    // Wto cards has been clicked
-    if (pickOne && pickTwo){
-      if(pickOne.image === pickTwo.image){
-        setCards((prevCard)=>{
-          return prevCard.map((card)=>{
-            if(card.image===pickOne.image){
-              //update hte card poroperrtt ti reflect hte mathc
-              return {...card, matched: true }; 
-            } else{
-              //no match
+    // Two cards have been clicked
+    if (pickOne && pickTwo) {
+      // Check if the cards the same
+      if (pickOne.image === pickTwo.image) {
+        setCards((prevCards) => {
+          return prevCards.map((card) => {
+            if (card.image === pickOne.image) {
+              // Update card property to reflect match
+              return { ...card, matched: true };
+            } else {
+              // No match
               return card;
             }
-          })
+          });
         });
         handleTurn();
-      } else{
-        // prevent new selections until disabled
+      } else {
+        // Prevent new selections until after delay
         setDisabled(true);
-        //disable the ui for 100 ecinds 
-        pickTimer =  setTimeout(() => {
-          handleTurn()
+        // Add delay between selections
+        pickTimer = setTimeout(() => {
+          handleTurn();
         }, 1000);
       }
     }
-    return ()=>{
-      clearTimeout(pickTimer)
-    }
-     
-  },[cards, pickOne, pickTwo])
+
+    return () => {
+      clearTimeout(pickTimer);
+    };
+  }, [cards, pickOne, pickTwo, wins]);
 
 
   //if player found all the matchs and we need to reset the board
